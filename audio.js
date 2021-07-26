@@ -1,5 +1,6 @@
 "use strict";
 
+// Set the file we're going to open
 let url = "Audio/ADpickup.mod"
 
 function bufferToHex(buffer) {
@@ -8,24 +9,44 @@ function bufferToHex(buffer) {
 		.join(" ")
 		.match(/.{1,48}/g)
 		.join("<br>\n");
-}	
+}
 
-let xhr = new XMLHttpRequest();
-xhr.open('get', url, true);
-xhr.responseType = 'arraybuffer';
-xhr.onload = function(event){
+// This loads the mod file from disk, via an http request.
+// Don't forget to run a local webserver! python -m http.server
+let mod_file_request = new XMLHttpRequest();
+mod_file_request.open('get', url, true);
+
+// XMLHttpRequest can automatically convert our data into an ArrayBuffer
+mod_file_request.responseType = 'arraybuffer';
+
+// The loading happens in a callback function, so it doesn't stop things from
+// happening on the page while the file loads.
+mod_file_request.onload = function(event){
 	//import .mod file
-	let trackerData = xhr.response;
+	let trackerData = mod_file_request.response;
+
+	// If this is true, then the file has been loaded as
+	// an ArrayBuffer. For more on ArrayBuffers, consult https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
 	if (trackerData) {
+		// The data is put into a ArrayBuffer view of type Uint8Array
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array
 		let byteData = new Uint8Array(trackerData);
+
+		// This is a fixed-length array of 8-bit numbers.
+
+
+
 		let hex = bufferToHex(byteData)
 		document.getElementById("hexx").innerHTML = hex;
-		
+
 		console.log(hex);
 
 		// locate the music pattern data
 
 		// edit the music pattern data
+
+		// For random numbers, try Math.random()
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
 		// display the new file data
 
@@ -33,7 +54,5 @@ xhr.onload = function(event){
 		// Though if you really want to write it out to a file to listen to, you can.
 	}
 }
-xhr.send();
-console.log(xhr);
-
-
+mod_file_request.send();
+console.log(mod_file_request);
