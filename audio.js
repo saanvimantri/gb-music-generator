@@ -14,6 +14,7 @@ let xhr = new XMLHttpRequest();
 xhr.open('get', url, true);
 xhr.responseType = 'arraybuffer';
 xhr.onload = function(event){
+	//import .mod file
 	let trackerData = xhr.response;
 	if (trackerData) {
 		let byteData = new Uint8Array(trackerData);
@@ -21,16 +22,18 @@ xhr.onload = function(event){
 		document.getElementById("hexx").innerHTML = hex;
 		
 		console.log(hex);
+
+		// locate the music pattern data
+
+		// edit the music pattern data
+
+		// display the new file data
+
+		// we won't write it out to disk yet, because that's actually going to be a separate part of the system
+		// Though if you really want to write it out to a file to listen to, you can.
 	}
 }
 xhr.send();
 console.log(xhr);
 
-//import .mod file
-const buffer = new ArrayBuffer(8);
-const view = new Uint8Array(buffer);
-const bytes = "4D 2E 4B 2E 11 1D 60 00";
-console.log(buffer);
-//change one single goddamn byte
 
-//output .mod file and stick in browser
