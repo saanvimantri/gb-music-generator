@@ -3,12 +3,14 @@
 // Set the file we're going to open
 let url = "Audio/ADpickup.mod"
 
+// This converts the numbers to strings of base-16 hex values.
+// If you can figure out how to make the columns more distinct, that would be neat.
 function bufferToHex(buffer) {
 	return [...buffer]
-		.map(b =>b.toString(16).padStart(2, "0"))
-		.join(" ")
-		.match(/.{1,48}/g)
-		.join("<br>\n");
+		.map(b =>b.toString(16).padStart(2, "0")) // Convert the numbers to hex, padding them with a zero if they are 0A or below.
+		.join(" ") // join the 2-digit numbers together, with a space between them
+		.match(/.{1,48}/g) // chunk the string into 48-character chunks
+		.join("<br>\n"); // join the chunks together again, with a new linebreak between them
 }
 
 // This loads the mod file from disk, via an http request.
@@ -35,22 +37,22 @@ mod_file_request.onload = function(event){
 		// This is a fixed-length array of 8-bit numbers.
 
 
-
+		// This is just here to display the data on the page.
 		let hex = bufferToHex(byteData)
 		document.getElementById("hexx").innerHTML = hex;
-
+		// Print the data to the console.
 		console.log(hex);
 
-		// locate the music pattern data
+		// 1. locate the music pattern data
 
-		// edit the music pattern data
+		// 2. edit the music pattern data
 
 		// For random numbers, try Math.random()
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
-		// display the new file data
+		// 3 display the new file data
 
-		// we won't write it out to disk yet, because that's actually going to be a separate part of the system
+		// 4. we won't write it out to disk yet, because that's actually going to be a separate part of the system
 		// Though if you really want to write it out to a file to listen to, you can.
 	}
 }
